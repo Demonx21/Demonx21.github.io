@@ -57,10 +57,38 @@ function init() {
 
 function render() {
     board.forEach(function(mark, index) {
-    //this moves the value of the board item into the squares[idx]
-    squares[index].textContent = mark;
+        squares[index].textContent = mark;
+        
+        squares[index].classList.remove('x', 'o');
+
+        if (mark === 'X') {
+            squares[index].classList.add('x'); 
+        } else if (mark === 'O') {
+            squares[index].classList.add('o'); 
+        }
     });
     messages.textContent = win === 'T' ? `C'est un match nul !` : win ? `${win} Gagne le match!` : `C'est le tour des ${turn} !`;
-    };
-
+};
 init();
+
+    /**
+     * Fonction pour seulement fermer le dialogue
+     */
+     function fermerDialogue() {
+            document.getElementById("Pop-up").close();
+        }
+        /**
+         * Fonction pour fermer définitivement le dialogue
+         */
+        function fermerPourToujours() {
+            localStorage.setItem("dialogueFermé", "true");
+            document.getElementById("Pop-up").close();
+        }
+        /**
+         * Vérifier si le dialogue a déjà été fermé définitivement
+         */
+        window.onload = function() {
+            if (localStorage.getItem("dialogueFermé") === "true") {
+                document.getElementById("Pop-up").close();
+            }
+        };

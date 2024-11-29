@@ -10,10 +10,20 @@
     <script defer src="js/main.js"></script>
     <!-- A fun title -->
     <title>Donner du pouvoir au Tic Tac Toe pour le bien de l'humanité</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
 </head>
 <body>
     <h1>Tic-Tac-Toe</h1>
     <h2>C'est le tour des X !</h2>
+
+    <dialog open="" id="Pop-up">
+        <p>Ceci est un message dans un dialogue.</p>
+        <button onclick="fermerDialogue()">Fermer</button>
+        <button onclick="fermerPourToujours()">Fermer pour toujours</button>
+    </dialog>
+    
     <!-- Many websites are just divs on divs on divs. -->
     <div class="flex-container flex-column">
         <div class="flex-container flex-wrap" id="board">
