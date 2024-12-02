@@ -101,7 +101,9 @@ function updateScore(winner) {
     }
     displayScore();
 }
-
+/**
+ * Pour afficher le score en haut de l'écran
+ */
 function displayScore() {
     scoreBoard.textContent = `Score: X - ${scoreX} | O - ${scoreO}`;
 }
