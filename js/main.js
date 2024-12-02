@@ -15,10 +15,18 @@ const winningCombos = [
 let board;
 let turn = 'X';
 let win;
+/**
+ * Compteur pour X et Compteur pour O
+ */
+let scoreX = 0;
+let scoreO = 0;
 
 /*----- cached element references -----*/
 
 const squares = Array.from(document.querySelectorAll('#board div'));
+const scoreBoard = document.createElement('div');
+scoreBoard.id = "scoreboard";
+document.body.insertBefore(scoreBoard, document.querySelector('h1').nextSibling);
 
 /*----- event listeners -----*/
 document.getElementById('board').addEventListener('click', handleTurn);
@@ -40,9 +48,18 @@ function handleTurn() {
     let idx = squares.findIndex(function(square) {
         return square === event.target;
     });
+    
+    /**
+     *  Ne pas pouvoir jouer si il y a une win ou un match nul
+     */
+    if (board[idx] || win) return;
+    
     board[idx] = turn;
     turn = turn === 'X' ? 'O' : 'X';
     win = getWinner();
+    if (win) {
+        updateScore(win);
+    }
     render();
 };
 
@@ -52,6 +69,10 @@ function init() {
     '', '', '',
     '', '', ''
     ];
+    /**
+     * Pour mettre l'état de la victoire
+     */
+    win = null
     render();
 };
 
@@ -69,26 +90,64 @@ function render() {
     });
     messages.textContent = win === 'T' ? `C'est un match nul !` : win ? `${win} Gagne le match!` : `C'est le tour des ${turn} !`;
 };
-init();
+/**
+ * Fonction pour faire un winner
+ */
+function updateScore(winner) {
+    if (winner === 'X') {
+        scoreX++;
+    } else if (winner === 'O') {
+        scoreO++;
+    }
+    displayScore();
+}
 
-    /**
-     * Fonction pour seulement fermer le dialogue
-     */
-     function fermerDialogue() {
-            document.getElementById("Pop-up").close();
-        }
-        /**
-         * Fonction pour fermer définitivement le dialogue
-         */
-        function fermerPourToujours() {
-            localStorage.setItem("dialogueFermé", "true");
-            document.getElementById("Pop-up").close();
-        }
-        /**
-         * Vérifier si le dialogue a déjà été fermé définitivement
-         */
-        window.onload = function() {
-            if (localStorage.getItem("dialogueFermé") === "true") {
-                document.getElementById("Pop-up").close();
-            }
-        };
+function displayScore() {
+    scoreBoard.textContent = `Score: X - ${scoreX} | O - ${scoreO}`;
+}
+init();
+/**
+ * Nommez les variables
+ */
+const modal = document.getElementById('popUp');
+const overlay = document.getElementById('overlay');
+
+/**
+ * Ouvrir automatiquement le modal dès que la page est prête
+ * De plus que le background soit bleu derrière le dialogue
+ */
+window.addEventListener('load', () => {
+  modal.showModal();  
+  overlay.style.display = 'block';  
+  document.body.style.overflow = 'hidden'; 
+});
+/**
+ * Pouvoir simplement fermer le dialogue et qu'il revient après que la page se recharge
+ * De plus que cela fait revernir a la norme le background
+ */
+function fermerDialogue() {
+  document.getElementById("popUp").close();
+  overlay.style.display = 'none';  
+  document.body.style.overflow = ''; 
+}
+/**
+ * Pouvoir activer le fait que le dialogue ce ferme pour toujours
+ * De plus que cela fait revernir a la norme le background
+ */
+function fermerPourToujours() {
+  localStorage.setItem("dialogueFermé", "true");
+  document.getElementById("popUp").close();
+  overlay.style.display = 'none';  
+  document.body.style.overflow = ''; 
+}
+/**
+ * Vérifier que quand la page se charge et que le bouton qui ferme pour toujours est activer cela ce ferme automatiquement.
+ * De plus que cela fait revernir a la norme le background
+ */
+window.onload = function() {
+  if (localStorage.getItem("dialogueFermé") === "true") {
+    document.getElementById("popUp").close();
+    overlay.style.display = 'none';  
+    document.body.style.overflow = '';
+  }
+};

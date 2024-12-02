@@ -17,12 +17,27 @@
 <body>
     <h1>Tic-Tac-Toe</h1>
     <h2>C'est le tour des X !</h2>
-
-    <dialog open="" id="Pop-up">
-        <p>Ceci est un message dans un dialogue.</p>
-        <button onclick="fermerDialogue()">Fermer</button>
-        <button onclick="fermerPourToujours()">Fermer pour toujours</button>
-    </dialog>
+    <div id="overlay" class="overlay"></div>
+<dialog id="popUp">
+  <div class="dialog-content">
+    <div id="header" class="header">
+      <h1>Projet personnel</h1>
+      <hr id="underline" class="underline" />
+      <p id="italic">Design web gr.2 - Automne 2024</p>
+    </div>
+    <div id="container" class="container">
+      <div id="textLeft" class="text-left">
+        <h2 id="petit">Réalisé par</h2>
+        <p id="italic">Donovan Hamel</p>
+        <h2 id="petit">Inspiration</h2>
+        <p id="italic"><a href="https://codesandbox.io/p/sandbox/z9fhk" target="_blank">https://codesandbox.io/p/sandbox/z9fhk</a></p>
+      </div>
+        <img id="megaman" src="megaman.png" alt="Megaman Image" />
+    </div>
+    <button onclick="fermerDialogue()" class="btn-bleu">Fermer la fenêtre</button>
+    <button onclick="fermerPourToujours()" class="btn-ecriture">Ne plus afficher cette fenêtre</button>
+      </div>
+</dialog>
     
     <!-- Many websites are just divs on divs on divs. -->
     <div class="flex-container flex-column">
